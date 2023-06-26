@@ -24,12 +24,18 @@
     <ClCompile Include="container.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="decorator.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="city.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="container.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="decorator.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
