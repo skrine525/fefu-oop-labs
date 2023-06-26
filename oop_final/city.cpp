@@ -84,6 +84,13 @@ ProductionRoom::ProductionRoom(int number, std::string label, unsigned machineCo
     this->machineCount = machineCount;
     this->powerPerMachine = powerPerMachine;
     this->goodsProducedCount = 0;
+    this->produceCallback = nullptr;
+}
+
+ProductionRoom::~ProductionRoom()
+{
+    if (produceCallback)
+        delete this->produceCallback;
 }
 
 std::string ProductionRoom::getInfo(bool full, std::string tab)
@@ -99,9 +106,18 @@ std::string ProductionRoom::getInfo(bool full, std::string tab)
     return info;
 }
 
+void ProductionRoom::SetProduceCallback(std::function<void()> callback)
+{
+    if (this->produceCallback)
+        delete this->produceCallback;
+    this->produceCallback = new std::function<void()>(callback);
+}
+
 void ProductionRoom::Produce()
 {
     this->goodsProducedCount += this->machineCount * this->powerPerMachine;
+    if (this->produceCallback)
+        (*this->produceCallback)();
 }
 
 bool operator>(const Building& a, const Building& b)

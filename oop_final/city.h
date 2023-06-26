@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <iostream>
+#include <functional>
 #include "container.h"
 
 class City;
@@ -52,10 +53,13 @@ class ProductionRoom : public Room
 public:
     ProductionRoom() {}
     ProductionRoom(int number, std::string label, unsigned machineCount, unsigned powerPerMachine);
+    ~ProductionRoom();
 
     std::string getInfo(bool full = false, std::string tab = "") override;
+    void SetProduceCallback(std::function<void()> callback);
     virtual void Produce();
 private:
+    std::function<void()>* produceCallback;
     std::string label;
     unsigned machineCount;
     unsigned powerPerMachine;

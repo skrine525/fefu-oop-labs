@@ -5,11 +5,20 @@
 /*
 * Что встроено:
 * Контейнер (двухсвязный кольцевой список без повторов, упорядоченный по возрастанию) + двунаправленный итератор
+* Билдер
+* Декоратор
+* Синглтон
+* Переопределение операторов
+* Лямбда
 */
 
 int main()
 {
     setlocale(LC_ALL, "Russian");
+
+    auto produceCallback = [] {
+        std::cout << "Producing: Comrade Xing approves\n";
+    };
 
     // Демонстрация билдера
     ContainerBuilder<Room> roomBuilder;
@@ -22,12 +31,13 @@ int main()
     building1->setRooms(roomBuilder.get());
     building2->setRooms(roomBuilder.get());
 
-    // Демонстрация наследования Room и декоратора
+    // Демонстрация наследования Room и декоратора и лямбды
     Building* building3 = new Building("Державина");
     building3->addRoom(new Room(10));
     building3->addRoom(new LivingRoom(20, true, false, true, false));
     building3->addRoom(new LivingRoom(30, false, true, false, true));
     ProductionRoom* productionRoom = new ProductionRoom(40, "Производство спичек", 10, 5);
+    productionRoom->SetProduceCallback(produceCallback);
     building3->addRoom(productionRoom);
     Decorator::ProduceDecorator produceDecorated(productionRoom, 5);    // Декоратор, который выполнит 5 раз Produce
     produceDecorated.Produce();                                         // Выполняем обернутый Produce
@@ -54,6 +64,7 @@ int main()
     Building* building6 = new Building("Красного знамени");
     building6->setRooms(roomBuilder.get());
     usr->addBuilding(building6);
+    std::cout << "==============================\n";
     CityManager::getInstance().printInfo();
 
     return 0;
